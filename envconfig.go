@@ -218,6 +218,13 @@ func processField(value string, field reflect.Value) error {
 	}
 
 	switch typ.Kind() {
+	case reflect.Interface:
+		valInt, err := strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			field.Set(reflect.ValueOf(value))
+		} else {
+			field.Set(reflect.ValueOf(valInt))
+		}
 	case reflect.String:
 		field.SetString(value)
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
